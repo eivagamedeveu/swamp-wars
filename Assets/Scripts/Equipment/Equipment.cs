@@ -9,4 +9,9 @@ public abstract class Equipment : MonoBehaviour
 
     public string Name => _name;
     public float Weight => _weight;
+
+    public virtual void Init()
+    {
+        
+    }
 }

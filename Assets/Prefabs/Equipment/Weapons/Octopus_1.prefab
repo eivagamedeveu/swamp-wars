@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: weapons/octopus 1
-  _weight: 0
+  _weight: 2
   _attackRange: 0
+  _minDamage: 7
+  _maxDamage: 12
   _type: 1

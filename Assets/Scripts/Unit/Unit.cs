@@ -97,7 +97,7 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     {
         foreach (var target in _attackZone.Targets)
         {
-            target.TakeDamage(_damage + Random.Range(-3, 3), transform.position.y);
+            target.TakeDamage(Random.Range(_rightWeapon.MinDamage, _rightWeapon.MaxDamage), transform.position.y);
         }
     }
 
