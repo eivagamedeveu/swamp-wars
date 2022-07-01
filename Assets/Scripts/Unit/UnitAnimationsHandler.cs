@@ -16,10 +16,6 @@ public class UnitAnimationsHandler : MonoBehaviour
     private void Awake()
     {
         _skeletonAnimation = GetComponent<SkeletonAnimation>();
-
-        var attachment = _skeletonAnimation.Skeleton.GetAttachment("weapons-r", "weapons/octopus 1");
-        
-        _skeletonAnimation.Skeleton.FindSlot("weapons-r").Attachment = attachment;
     }
 
     private void OnAnimationCompleted(TrackEntry trackEntry)
@@ -34,5 +30,12 @@ public class UnitAnimationsHandler : MonoBehaviour
         _track = _skeletonAnimation.state.SetAnimation(0, targetAnimation, loop);
         
         _track.Complete += OnAnimationCompleted;
+    }
+
+    public void SetRightWeapon(string weaponName)
+    {
+        var attachment = _skeletonAnimation.Skeleton.GetAttachment("weapons-r", weaponName);
+        
+        _skeletonAnimation.Skeleton.FindSlot("weapons-r").Attachment = attachment;
     }
 }

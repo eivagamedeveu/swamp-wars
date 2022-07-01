@@ -15,8 +15,6 @@ public class LocalDataManager : Singleton<LocalDataManager>
     
     public Config Config { get; private set; }
 
-    public event UnityAction IsConfigUploaded;
-
     protected override void Awake()
     {
         base.Awake();
@@ -49,7 +47,16 @@ public class LocalDataManager : Singleton<LocalDataManager>
         request.Abort();
         request.Dispose();
         
-        IsConfigUploaded?.Invoke();
+        SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
+    }
+
+    public void CreateConfigTemplate()
+    {
+        var path = Path.Combine(Application.dataPath, "ConfigTemplate.json");
+
+        Config = new Config();
+        
+        File.WriteAllText(path, JsonUtility.ToJson(Config));
     }
 }
 
@@ -66,8 +73,10 @@ public class Config
     public float RangeWeaponRange;
     public float ThrowWeaponRange;
     public float ThrowWeaponStunlock;
-
-    /*
+    public float ShortWeaponWeightMultiplier;
+    public float MediumWeaponWeightMultiplier;
+    public float LongWeaponWeightMultiplier;
+    
     public Config()
     {
         DieDelay = 2f;
@@ -81,5 +90,8 @@ public class Config
         RangeWeaponRange = 4f;
         ThrowWeaponRange = 3f;
         ThrowWeaponStunlock = 2f;
-    }*/
+        ShortWeaponWeightMultiplier = .5f;
+        MediumWeaponWeightMultiplier = 1.5f;
+        LongWeaponWeightMultiplier = 3f;
+    }
 }

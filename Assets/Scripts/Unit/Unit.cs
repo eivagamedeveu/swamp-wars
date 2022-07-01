@@ -12,7 +12,12 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private float _attackZoneSize;
     [SerializeField] protected int _health;
     [SerializeField] protected int _damage;
-    
+    [SerializeField] protected float _weight;
+    [SerializeField] protected Weapon _rightWeaponTemplate;
+    [SerializeField] protected Weapon _leftWeaponTemplate;
+
+    private Weapon _rightWeapon;
+    private Weapon _leftWeapon;
     private AttackZone _attackZone;
     private bool _isDied = false;
 
@@ -26,17 +31,39 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     private void Awake()
     {
         _attackZone = GetComponentInChildren<AttackZone>();
-        _attackZone.SetAttackZone(_attackZoneSize);
         UnitAnimationsHandler = GetComponent<UnitAnimationsHandler>();
         UnitStamina = GetComponent<UnitStamina>();
     }
 
+    protected virtual void Start()
+    {
+        CreateWeapons();
+    }
+
+    private void CreateWeapons()
+    {
+        if (_rightWeaponTemplate != null)
+        {
+            _rightWeapon = Instantiate(_rightWeaponTemplate, transform);
+            _rightWeapon.Init();
+            UnitAnimationsHandler.SetRightWeapon(_rightWeapon.Name);
+        }
+
+        if (_leftWeaponTemplate != null)
+        {
+            _leftWeapon = Instantiate(_leftWeaponTemplate, transform);
+            _leftWeapon.Init();
+        }
+        
+        _attackZone.SetAttackZone(_rightWeapon.AttackRange);
+    }
+    
     private void Die()
     {
         _isDied = true;
         UnitStateMachine.SetState(UnitState.Die);
     }
-    
+
     public virtual void TakeDamage(int damage, float attackerYPosition)
     {
         if(_isDied) return;

@@ -9,7 +9,7 @@ public class TestPanel : MonoBehaviour
     
     public void Restart()
     {
-        SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     public void Exit()

@@ -7,8 +7,10 @@ public class Player : Unit
 {
     [SerializeField] private HealthBar _healthBar;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+        
         _healthBar.Init(_health, _health);
     }
 }

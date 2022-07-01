@@ -29,7 +29,7 @@ public abstract class State : MonoBehaviour
         UnitStateMachine = GetComponent<UnitStateMachine>();
     }
 
-    public void Init(Unit unit)
+    public virtual void Init(Unit unit)
     {
         Unit = unit;
     }

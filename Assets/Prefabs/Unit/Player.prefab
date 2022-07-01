@@ -575,8 +575,8 @@ MonoBehaviour:
   _isStaminaNeeded: 0
   _isLooped: 1
   _stateAnimation: {fileID: 11400000, guid: ba0d20900de3c204b87a4e7241916cf3, type: 2}
-  _playerInput: {fileID: 1116747635004742576}
   _speed: 10
+  _playerInput: {fileID: 1116747635004742576}
 --- !u!114 &4081319045754349404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,7 +596,7 @@ MonoBehaviour:
   _isStaminaNeeded: 1
   _isLooped: 0
   _stateAnimation: {fileID: 11400000, guid: 5c62888c638e55c4f88b9806ae897742, type: 2}
-  _force: 10
+  _force: 20
 --- !u!114 &1671472181423920034
 MonoBehaviour:
   m_ObjectHideFlags: 0

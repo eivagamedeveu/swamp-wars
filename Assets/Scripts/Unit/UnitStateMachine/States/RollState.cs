@@ -9,21 +9,13 @@ public class RollState : State
     
     private Rigidbody2D _rigidbody;
 
-    private void Start()
+    public override void Init(Unit unit)
     {
-        LocalDataManager.Instance.IsConfigUploaded += SetRequiredStamina;
-    }
-
-    private void OnDisable()
-    {
-        LocalDataManager.Instance.IsConfigUploaded -= SetRequiredStamina;
-    }
-
-    private void SetRequiredStamina()
-    {
+        base.Init(unit);
+        
         RequiredStamina = LocalDataManager.Instance.Config.RollStaminaConsume;
     }
-    
+
     public override void Enter()
     {
         base.Enter();
