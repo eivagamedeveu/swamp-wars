@@ -62,6 +62,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Use"",
+                    ""type"": ""Button"",
+                    ""id"": ""85639ec9-bb21-4902-8ec6-9d206e4d51c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +161,17 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5dce42d1-c146-445e-9464-e1a7d4d7403b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Mouse & Keyboard"",
+                    ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +201,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Unit_Move = m_Unit.FindAction("Move", throwIfNotFound: true);
         m_Unit_Block = m_Unit.FindAction("Block", throwIfNotFound: true);
         m_Unit_Roll = m_Unit.FindAction("Roll", throwIfNotFound: true);
+        m_Unit_Use = m_Unit.FindAction("Use", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +265,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Unit_Move;
     private readonly InputAction m_Unit_Block;
     private readonly InputAction m_Unit_Roll;
+    private readonly InputAction m_Unit_Use;
     public struct UnitActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -252,6 +274,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Unit_Move;
         public InputAction @Block => m_Wrapper.m_Unit_Block;
         public InputAction @Roll => m_Wrapper.m_Unit_Roll;
+        public InputAction @Use => m_Wrapper.m_Unit_Use;
         public InputActionMap Get() { return m_Wrapper.m_Unit; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -273,6 +296,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Roll.started -= m_Wrapper.m_UnitActionsCallbackInterface.OnRoll;
                 @Roll.performed -= m_Wrapper.m_UnitActionsCallbackInterface.OnRoll;
                 @Roll.canceled -= m_Wrapper.m_UnitActionsCallbackInterface.OnRoll;
+                @Use.started -= m_Wrapper.m_UnitActionsCallbackInterface.OnUse;
+                @Use.performed -= m_Wrapper.m_UnitActionsCallbackInterface.OnUse;
+                @Use.canceled -= m_Wrapper.m_UnitActionsCallbackInterface.OnUse;
             }
             m_Wrapper.m_UnitActionsCallbackInterface = instance;
             if (instance != null)
@@ -289,6 +315,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Roll.started += instance.OnRoll;
                 @Roll.performed += instance.OnRoll;
                 @Roll.canceled += instance.OnRoll;
+                @Use.started += instance.OnUse;
+                @Use.performed += instance.OnUse;
+                @Use.canceled += instance.OnUse;
             }
         }
     }
@@ -308,5 +337,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnBlock(InputAction.CallbackContext context);
         void OnRoll(InputAction.CallbackContext context);
+        void OnUse(InputAction.CallbackContext context);
     }
 }

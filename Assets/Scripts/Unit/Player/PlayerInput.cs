@@ -20,6 +20,7 @@ public class PlayerInput : MonoBehaviour
         _playerInputActions.Unit.Block.performed += ctx => FinishBlock();
         _playerInputActions.Unit.Move.performed += ctx => ToMoveState();
         _playerInputActions.Unit.Roll.performed += ctx => ToRollState();
+        _playerInputActions.Unit.Use.performed += ctx => TryToUse();
         _playerInputActions.Enable();
 
         _player = GetComponent<Player>();
@@ -48,5 +49,10 @@ public class PlayerInput : MonoBehaviour
     private void ToRollState()
     {
         _player.UnitStateMachine.SetState(UnitState.Roll);
+    }
+    
+    private void TryToUse()
+    {
+        _player.TryUseSomething();
     }
 }

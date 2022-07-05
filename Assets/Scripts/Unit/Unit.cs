@@ -11,8 +11,7 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private UnitStateMachine _unitStateMachine;
     [SerializeField] private float _attackZoneSize;
     [SerializeField] protected int _health;
-    [SerializeField] protected int _damage;
-    [SerializeField] protected float _weight;
+    [SerializeField] protected float _weight = 0;
     [SerializeField] protected Weapon _rightWeaponTemplate;
     [SerializeField] protected Weapon _leftWeaponTemplate;
 
@@ -26,6 +25,7 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     public UnitStamina UnitStamina { get; private set; }
     public UnitStateMachine UnitStateMachine => _unitStateMachine;
     public float AttackZoneSize => _attackZoneSize;
+    public float Weight => _weight;
     public event UnityAction<float> IsHealthChanged;
 
     private void Awake()
@@ -38,6 +38,8 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     protected virtual void Start()
     {
         CreateWeapons();
+        
+        CalculateWeight();
     }
 
     private void CreateWeapons()
@@ -56,6 +58,16 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
         }
         
         _attackZone.SetAttackZone(_rightWeapon.AttackRange);
+    }
+
+    private void CalculateWeight()
+    {
+        var equipments = GetComponentsInChildren<Equipment>();
+
+        foreach (var equipment in equipments)
+        {
+            _weight += equipment.Weight;
+        }
     }
     
     private void Die()

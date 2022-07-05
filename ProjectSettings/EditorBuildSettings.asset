@@ -11,5 +11,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: de2bbcbcca33eb0448e787c1fc0d63a4
+  - enabled: 1
+    path: Assets/Scenes/NightClubScene.unity
+    guid: c2814ac428e342e48a305549cd7f4f31
+  - enabled: 1
+    path: Assets/Scenes/TransitionScene.unity
+    guid: a671d18667d5ee8409770dc3373399ee
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: eca0120a35dc8ad48bc573d28f13dcc1, type: 2}
