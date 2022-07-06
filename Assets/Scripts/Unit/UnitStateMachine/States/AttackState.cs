@@ -13,6 +13,7 @@ public class AttackState : State
     {
         base.Enter();
         
+        Unit.UnitAnimationsHandler.SetTimeScale(Unit.AttackSpeed);
         Unit.UnitAnimationsHandler.IsAnimationCompleted += Exit;
     }
 
@@ -23,6 +24,7 @@ public class AttackState : State
 
     public override void Exit()
     {
+        Unit.UnitAnimationsHandler.SetTimeScale(1f);
         Unit.UnitAnimationsHandler.IsAnimationCompleted -= Exit;
         Unit.Attack();
 

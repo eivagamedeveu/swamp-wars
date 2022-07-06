@@ -28,7 +28,7 @@ public class AttackZone : MonoBehaviour
         localScale = new Vector3(size, localScale.y, localScale.z);
         
         var localPosition = transform.localPosition;
-        localPosition = new Vector3(2 + size, localPosition.y, localPosition.z);
+        localPosition = new Vector3(2.5f + size, localPosition.y, localPosition.z);
         
         transform.localScale = localScale;
         transform.localPosition = localPosition;

@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Spine.Unity;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -24,6 +20,17 @@ public class PlayerInput : MonoBehaviour
         _playerInputActions.Enable();
 
         _player = GetComponent<Player>();
+    }
+
+    private void OnDestroy()
+    {
+        _playerInputActions.Unit.Attack.performed -= ctx => ToAttackState();
+        _playerInputActions.Unit.Block.started -= ctx => ToBlockState();
+        _playerInputActions.Unit.Block.performed -= ctx => FinishBlock();
+        _playerInputActions.Unit.Move.performed -= ctx => ToMoveState();
+        _playerInputActions.Unit.Roll.performed -= ctx => ToRollState();
+        _playerInputActions.Unit.Use.performed -= ctx => TryToUse();
+        _playerInputActions.Disable();
     }
 
     private void ToMoveState()

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Spine;
 using Spine.Unity;
 using UnityEngine;
@@ -32,10 +30,15 @@ public class UnitAnimationsHandler : MonoBehaviour
         _track.Complete += OnAnimationCompleted;
     }
 
-    public void SetRightWeapon(string weaponName)
+    public void SetWeapon(string weaponName)
     {
         var attachment = _skeletonAnimation.Skeleton.GetAttachment("weapons-r", weaponName);
         
         _skeletonAnimation.Skeleton.FindSlot("weapons-r").Attachment = attachment;
+    }
+
+    public void SetTimeScale(float timeScale)
+    {
+        _skeletonAnimation.timeScale = timeScale;
     }
 }

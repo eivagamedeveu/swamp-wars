@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Unit
@@ -12,7 +9,8 @@ public class Player : Unit
     {
         base.Start();
         
-        _healthBar.Init(_health, _health);
+        if(_healthBar != null)
+            _healthBar.Init(_health, _health);
     }
 
     public void TryUseSomething()

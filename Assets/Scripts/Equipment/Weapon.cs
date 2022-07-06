@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : Equipment
@@ -14,18 +12,10 @@ public class Weapon : Equipment
     public int MaxDamage => _maxDamage;
 
     public float AttackRange => _attackRange;
+    public float AttackSpeed { get; private set; }
 
     public override void Init()
     {
-        _weight *= _type switch
-        {
-            WeaponType.Short => LocalDataManager.Instance.Config.ShortWeaponWeightMultiplier,
-            WeaponType.Medium => LocalDataManager.Instance.Config.MediumWeaponWeightMultiplier,
-            WeaponType.Long => LocalDataManager.Instance.Config.LongWeaponWeightMultiplier,
-            WeaponType.Range => 1,
-            _ => 1
-        };
-        
         _attackRange = _type switch
         {
             WeaponType.Short => LocalDataManager.Instance.Config.ShortWeaponRange,
@@ -34,6 +24,17 @@ public class Weapon : Equipment
             WeaponType.Range => LocalDataManager.Instance.Config.RangeWeaponRange,
             _ => throw new ArgumentOutOfRangeException()
         };
+        
+        var weightMultiplier = _type switch
+        {
+            WeaponType.Short => LocalDataManager.Instance.Config.ShortWeaponWeightMultiplier,
+            WeaponType.Medium => LocalDataManager.Instance.Config.MediumWeaponWeightMultiplier,
+            WeaponType.Long => LocalDataManager.Instance.Config.LongWeaponWeightMultiplier,
+            WeaponType.Range => 1,
+            _ => 1
+        };
+
+        AttackSpeed = weightMultiplier / _weight;
     }
 }
 

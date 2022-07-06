@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -12,20 +9,20 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     [SerializeField] private float _attackZoneSize;
     [SerializeField] protected int _health;
     [SerializeField] protected float _weight = 0;
-    [SerializeField] protected Weapon _rightWeaponTemplate;
-    [SerializeField] protected Weapon _leftWeaponTemplate;
-
-    private Weapon _rightWeapon;
-    private Weapon _leftWeapon;
+    
+    
     private AttackZone _attackZone;
     private bool _isDied = false;
 
+    protected Weapon Weapon;
+    
     public int LookDirection { get; private set; }
     public UnitAnimationsHandler UnitAnimationsHandler { get; protected set; }
     public UnitStamina UnitStamina { get; private set; }
     public UnitStateMachine UnitStateMachine => _unitStateMachine;
     public float AttackZoneSize => _attackZoneSize;
     public float Weight => _weight;
+    public float AttackSpeed => Weapon.AttackSpeed;
     public event UnityAction<float> IsHealthChanged;
 
     private void Awake()
@@ -37,27 +34,22 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
 
     protected virtual void Start()
     {
-        CreateWeapons();
+        InitEquipment();
         
         CalculateWeight();
     }
 
-    private void CreateWeapons()
+    private void InitEquipment()
     {
-        if (_rightWeaponTemplate != null)
+        Weapon = GetComponentInChildren<Weapon>();
+        
+        if (Weapon != null)
         {
-            _rightWeapon = Instantiate(_rightWeaponTemplate, transform);
-            _rightWeapon.Init();
-            UnitAnimationsHandler.SetRightWeapon(_rightWeapon.Name);
+            Weapon.Init();
+            UnitAnimationsHandler.SetWeapon(Weapon.Name);
         }
 
-        if (_leftWeaponTemplate != null)
-        {
-            _leftWeapon = Instantiate(_leftWeaponTemplate, transform);
-            _leftWeapon.Init();
-        }
-        
-        _attackZone.SetAttackZone(_rightWeapon.AttackRange);
+        _attackZone.SetAttackZone(Weapon != null ? Weapon.AttackRange : 2);
     }
 
     private void CalculateWeight()
@@ -109,7 +101,7 @@ public abstract class Unit : MonoBehaviour, IDamageable, IAttacker
     {
         foreach (var target in _attackZone.Targets)
         {
-            target.TakeDamage(Random.Range(_rightWeapon.MinDamage, _rightWeapon.MaxDamage), transform.position.y);
+            target.TakeDamage(Random.Range(Weapon.MinDamage, Weapon.MaxDamage), transform.position.y);
         }
     }
 
